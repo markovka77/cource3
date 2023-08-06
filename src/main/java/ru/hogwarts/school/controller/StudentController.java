@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
+import java.util.Collection;
+
 @RestController
 @RequestMapping("student")
 public class StudentController {
@@ -15,27 +17,40 @@ public class StudentController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Student> getStudent(@PathVariable long id){
-       Student student= studentService.findStudent(id);
-       if(student==null){
-            return ResponseEntity.notFound().build();
-       }
-       return ResponseEntity.ok(student);
-    }
-    @PostMapping
-    public Student createStudent(@RequestBody Student student){
-       return studentService.createStudent(student);
-    }
-    @PutMapping
-    public ResponseEntity<Student> editStudent(@RequestBody Student student){
-        Student studentCheck= studentService.editStudent(student);
-        if(studentCheck==null){
+    public ResponseEntity<Student> getStudent(@PathVariable long id) {
+        Student student = studentService.findStudent(id);
+        if (student == null) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(student);
     }
+
+    @GetMapping
+    public Collection<Student> getAllStudent() {
+        return studentService.getAllStudent();
+    }
+
+    @GetMapping("/sort")
+    public Collection<Student> sortByAge(@RequestParam("age") int age) {
+        return studentService.sortByAge(age);
+    }
+
+    @PostMapping
+    public Student createStudent(@RequestBody Student student) {
+        return studentService.createStudent(student);
+    }
+
+    @PutMapping
+    public ResponseEntity<Student> editStudent(@RequestBody Student student) {
+        Student studentCheck = studentService.editStudent(student);
+        if (studentCheck == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(student);
+    }
+
     @DeleteMapping("{id}")
-    public Student removeStudent(@PathVariable long id){
+    public Student removeStudent(@PathVariable long id) {
         return studentService.removeStudent(id);
     }
 }
