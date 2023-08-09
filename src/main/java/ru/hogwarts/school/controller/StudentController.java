@@ -50,7 +50,8 @@ public class StudentController {
     }
 
     @DeleteMapping("{id}")
-    public Student removeStudent(@PathVariable long id) {
-        return studentService.removeStudent(id);
+    public ResponseEntity<Student> removeStudent(@PathVariable long id) {
+        studentService.removeStudent(id);
+        return ResponseEntity.ok().build();
     }
 }
