@@ -1,8 +1,8 @@
 package ru.hogwarts.school.service;
 
 import org.springframework.stereotype.Service;
-import ru.hogwarts.school.repositories.StudentsRepository;
 import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.repositories.StudentsRepository;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -19,7 +19,7 @@ public class StudentService {
 
 
     public Student createStudent(Student student) {
-       return studentsRepository.save(student);
+        return studentsRepository.save(student);
     }
 
     public Student findStudent(long id) {
@@ -31,7 +31,7 @@ public class StudentService {
     }
 
     public void removeStudent(long id) {
-         studentsRepository.deleteAllById(Collections.singleton(id));
+        studentsRepository.deleteAllById(Collections.singleton(id));
     }
 
     public Collection<Student> getAllStudent() {
@@ -40,7 +40,7 @@ public class StudentService {
 
     public Collection<Student> sortByAge(int age) {
         return studentsRepository.findAll().stream()
-                .filter(s->s.getAge()==age)
+                .filter(s -> s.getAge() == age)
                 .collect(Collectors.toList());
     }
 
