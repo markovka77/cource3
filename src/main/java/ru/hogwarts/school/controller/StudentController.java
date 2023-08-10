@@ -26,13 +26,20 @@ public class StudentController {
     }
 
     @GetMapping
-    public Collection<Student> getAllStudent() {
+    public Collection<Student> getStudent(){
+
         return studentService.getAllStudent();
     }
 
     @GetMapping("/sort")
-    public Collection<Student> sortByAge(@RequestParam("age") int age) {
-        return studentService.sortByAge(age);
+    public ResponseEntity<Collection<Student>> sortByAge(@RequestParam(required = false) Integer age,
+                                         @RequestParam(required = false)Integer min,
+                                         @RequestParam(required = false)Integer max) {
+        if( min != null || max != null){
+            return ResponseEntity.ok(studentService.findStudentByAgeBetween(min, max));
+        }
+
+        return ResponseEntity.ok( studentService.sortByAge(age));
     }
 
     @PostMapping
@@ -53,5 +60,9 @@ public class StudentController {
     public ResponseEntity<Student> removeStudent(@PathVariable long id) {
         studentService.removeStudent(id);
         return ResponseEntity.ok().build();
+    }
+    @GetMapping("/find")
+    public Collection<Student>findByStudent(String name){
+        return studentService.getFacultyId(name);
     }
 }

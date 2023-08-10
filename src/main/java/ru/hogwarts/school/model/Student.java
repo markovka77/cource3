@@ -5,6 +5,8 @@ import org.springframework.data.annotation.Id;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.util.Objects;
 
 @Entity(name = "any_student")
@@ -15,6 +17,10 @@ public class Student {
     private long id;
     private String name;
     private int age;
+
+    @ManyToOne
+    @JoinColumn(name="faculty_id")
+    private Faculty faculty;
 
     public Student(long id, String name, int age) {
         this.id = id;
