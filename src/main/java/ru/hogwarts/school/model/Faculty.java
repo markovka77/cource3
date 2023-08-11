@@ -13,9 +13,16 @@ public class Faculty {
     private String color;
 
 
-    @OneToMany(mappedBy = "name")
+    @OneToMany(mappedBy = "faculty",cascade = CascadeType.ALL)
     private Collection<Student>students;
 
+    public Collection<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(Collection<Student> students) {
+        this.students = students;
+    }
 
     public Faculty(long id, String name, String color) {
         this.id = id;
@@ -57,6 +64,7 @@ public class Faculty {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", color='" + color + '\'' +
+                ", students=" + students +
                 '}';
     }
 
