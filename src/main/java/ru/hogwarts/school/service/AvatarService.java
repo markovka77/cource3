@@ -43,7 +43,12 @@ public class AvatarService {
         avatarFile.getInputStream().transferTo(fos);
         fos.close();
 
-        Avatar avatar = new Avatar();
+
+
+        Student studentReference= studentsRepository.getReferenceById(studentId);
+        Avatar avatar= avatarRepository.findAvatarByStudent(studentReference)
+                .orElse(new Avatar());
+
         avatar.setStudent(studentsRepository.getReferenceById(studentId));
         avatar.setFilePath(absolutPath);
         avatar.setMediaType(avatarFile.getContentType());
@@ -55,6 +60,9 @@ public class AvatarService {
 
 
 
+    }
+    public Avatar getById(Long id){
+        return avatarRepository.findById(id).orElseThrow();
     }
 
     private String getExtensions(String fileName) {
