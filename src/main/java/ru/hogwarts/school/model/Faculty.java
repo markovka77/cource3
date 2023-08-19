@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
 
-@Entity(name = "any_faculty")
+@Entity
 public class Faculty {
     @Id
     @GeneratedValue
