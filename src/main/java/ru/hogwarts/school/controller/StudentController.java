@@ -66,8 +66,8 @@ public class StudentController {
         studentService.removeStudent(id);
         return ResponseEntity.ok().build();
     }
-    @GetMapping("/find")
-    public Collection<Student>findByStudent(String name){
+    @GetMapping("/findByFaculty")
+    public Collection<Student>findByStudentByFaculty(String name){
         return studentService.getFacultyId(name);
     }
 }
