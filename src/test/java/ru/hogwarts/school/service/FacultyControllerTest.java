@@ -12,6 +12,8 @@ import ru.hogwarts.school.controller.FacultyController;
 import ru.hogwarts.school.controller.StudentController;
 import ru.hogwarts.school.model.Faculty;
 
+import java.util.Collection;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class FacultyControllerTest {
     @LocalServerPort
@@ -49,10 +51,26 @@ public class FacultyControllerTest {
 
     @Test
     public void findFacultyById()throws Exception{
-
         Assertions
                 .assertThat(this.restTemplate.getForObject("http://localhost:" + testPort + "/faculty" + faculty.getId(), String.class))
                 .isNotNull();
+    }
+
+    @Test
+    public void sortByColor() throws Exception{
+        Assertions
+                .assertThat(this.restTemplate.getForObject("http://localhost:" + testPort + "/faculty"+"/" +"sort?color="+ faculty.getColor(), String.class))
+                .isNotEmpty();
+
+    }
+
+    @Test
+    public void sortByName() throws Exception{
+
+        Assertions
+                .assertThat(this.restTemplate.getForObject("http://localhost:" + testPort + "/faculty/sort?color="+ faculty.getName(), String.class))
+                .isNotEmpty();
+
     }
 
 

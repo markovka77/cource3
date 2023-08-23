@@ -68,7 +68,7 @@ public class StudentControllerTest {
 
     }
     @Test
-    public void sortByAge()throws Exception{
+    public void sortByAgeTest()throws Exception{
         Student student = new Student(228,"andy",50);
         studentController.createStudent(student);
         int age = 50;
@@ -76,6 +76,8 @@ public class StudentControllerTest {
                 .assertThat(this.restTemplate.getForObject("http://localhost:" + testPort + "/" + "student" + "/" + "sort?age=" + age, Object.class))
                 .isNotNull();
     }
+
+
 
 
 
