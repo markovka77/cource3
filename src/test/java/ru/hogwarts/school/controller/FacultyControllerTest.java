@@ -1,4 +1,4 @@
-package ru.hogwarts.school.service;
+package ru.hogwarts.school.controller;
 
 import net.bytebuddy.asm.Advice;
 import org.assertj.core.api.Assertions;
