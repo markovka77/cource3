@@ -70,4 +70,20 @@ public class StudentController {
     public Collection<Student>findByStudentByFaculty(String name){
         return studentService.getFacultyId(name);
     }
+
+    @GetMapping("/count")
+    public int getCountOfStudents(){
+        return studentService.getCountOfStudents();
+    }
+
+    @GetMapping("/avgAge")
+    public int getAvgAgeOfStudent(){
+        return studentService.getAvgAgeOfStudents();
+    }
+
+    @GetMapping("/lastStudents")
+    public Collection<Student> getLastFiveStudents(){
+        return studentService.getFiveLastStudents();
+    }
+
 }
