@@ -113,13 +113,16 @@ public class FacultyControllerTest {
     void byStudent() {
         ResponseEntity<Faculty> response = createFaculty("math", "red");
         Faculty faculty = response.getBody();
-        Student student = new Student(3,"Piter",18);
+        Student student = new Student();
+        student.setId(2);
+        student.setName("Piter");
+        student.setAge(12);
         student.setFaculty(faculty);
 
         ResponseEntity<Student>studentResponse =restTemplate.postForEntity("/student",student, Student.class);
-        assertThat(studentResponse.getBody()).isEqualTo(HttpStatus.OK);
+        assertThat(studentResponse.getBody()).isEqualTo(student);
         String studentName = studentResponse.getBody().getName();
-        restTemplate.getForEntity("faculty/find?name="+studentName,Faculty.class);
+        restTemplate.getForEntity("/faculty/find?name=Piter)",Faculty.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody()).isEqualTo(faculty);
