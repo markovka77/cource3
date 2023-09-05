@@ -1,0 +1,6 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2
+      author: Markovka
+      changes:
+        - CREATE INDEX faculty_color_and_name ON faculty (color, name);
