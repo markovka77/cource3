@@ -30,7 +30,7 @@ public class FacultyService {
     }
 
     public void removeFaculty(long id) {
-        facultyRepository.deleteAllById(Collections.singleton(id));
+        facultyRepository.deleteAllById(id);
     }
 
     public Collection<Faculty> getAllFaculty() {

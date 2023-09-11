@@ -6,25 +6,20 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.hogwarts.school.model.Avatar;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repositories.AvatarRepository;
-import ru.hogwarts.school.repositories.StudentsRepository;
+import ru.hogwarts.school.repositories.StudentRepository;
 
-import javax.transaction.Transactional;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Objects;
-import java.util.Optional;
-
-import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
 @Service
 public class AvatarService {
     private final AvatarRepository avatarRepository;
-    private final StudentsRepository studentsRepository;
+    private final StudentRepository studentRepository;
 
-    public AvatarService(AvatarRepository avatarRepository, StudentsRepository studentsRepository) {
+    public AvatarService(AvatarRepository avatarRepository, StudentRepository studentRepository) {
         this.avatarRepository = avatarRepository;
-        this.studentsRepository = studentsRepository;
+        this.studentRepository = studentRepository;
     }
 
     @Value("${path.to.avatars.folder}")
@@ -45,11 +40,11 @@ public class AvatarService {
 
 
 
-        Student studentReference= studentsRepository.getReferenceById(studentId);
+        Student studentReference= studentRepository.getReferenceById(studentId);
         Avatar avatar= avatarRepository.findAvatarByStudent(studentReference)
                 .orElse(new Avatar());
 
-        avatar.setStudent(studentsRepository.getReferenceById(studentId));
+        avatar.setStudent(studentRepository.getReferenceById(studentId));
         avatar.setFilePath(absolutPath);
         avatar.setMediaType(avatarFile.getContentType());
         avatar.setFileSize(avatarFile.getSize());
