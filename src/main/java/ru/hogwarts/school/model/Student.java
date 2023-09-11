@@ -3,8 +3,7 @@ package ru.hogwarts.school.model;
 
 import org.springframework.data.annotation.Id;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity(name = "any_student")
@@ -15,6 +14,10 @@ public class Student {
     private long id;
     private String name;
     private int age;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="faculty_id")
+    private Faculty faculty;
 
     public Student(long id, String name, int age) {
         this.id = id;
