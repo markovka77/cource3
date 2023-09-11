@@ -6,8 +6,9 @@ import org.springframework.data.annotation.Id;
 import javax.persistence.*;
 import java.util.Objects;
 
-@Entity(name = "any_student")
+@Entity
 public class Student {
+
     @javax.persistence.Id
     @Id
     @GeneratedValue
@@ -75,11 +76,10 @@ public class Student {
         return Objects.hash(id, name, age);
     }
 
+
     public void setId(Long id) {
         this.id = id;
     }
 
-//    public Long getId() {
-//        return id;
-//    }
+
 }
