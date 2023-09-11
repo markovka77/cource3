@@ -1,8 +1,17 @@
 package ru.hogwarts.school.model;
 
+
+import org.springframework.data.annotation.Id;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import java.util.Objects;
 
+@Entity(name = "any_student")
 public class Student {
+    @javax.persistence.Id
+    @Id
+    @GeneratedValue
     private long id;
     private String name;
     private int age;
@@ -11,6 +20,10 @@ public class Student {
         this.id = id;
         this.name = name;
         this.age = age;
+    }
+
+    public Student() {
+
     }
 
     public Long getId() {
@@ -58,4 +71,12 @@ public class Student {
     public int hashCode() {
         return Objects.hash(id, name, age);
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+//    public Long getId() {
+//        return id;
+//    }
 }

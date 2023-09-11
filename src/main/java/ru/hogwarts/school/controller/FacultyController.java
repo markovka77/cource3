@@ -50,8 +50,9 @@ public class FacultyController {
     }
 
     @DeleteMapping("{id}")
-    public Faculty removeFaculty(@PathVariable long id) {
-        return facultyService.removeFaculty(id);
+    public ResponseEntity<Faculty> removeFaculty(@PathVariable long id) {
+        facultyService.removeFaculty(id);
+        return ResponseEntity.ok().build();
     }
 
 }
