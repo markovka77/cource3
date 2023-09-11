@@ -1,5 +1,7 @@
 package ru.hogwarts.school.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ import java.util.Collection;
 
 @Service
 public class AvatarService {
+    Logger logger = LoggerFactory.getLogger(AvatarService.class);
     private final AvatarRepository avatarRepository;
     private final StudentRepository studentRepository;
 
@@ -30,6 +33,7 @@ public class AvatarService {
 
 
     public Long uploadAvatar(Long studentId, MultipartFile avatarFile) throws IOException {
+        logger.debug("upLoadAvatar is running");
         Files.createDirectories(avatarsDir);
         String originalFileName = avatarFile.getOriginalFilename();
         int dotIndex = originalFileName.lastIndexOf(".");
@@ -59,6 +63,7 @@ public class AvatarService {
 
     }
     public Avatar getById(Long id){
+        logger.debug("getById is running");
         return avatarRepository.findById(id).orElseThrow();
     }
 
@@ -68,6 +73,7 @@ public class AvatarService {
     }
 
     public Collection<Avatar> getAllAvatars(Integer pageNumber, Integer pageSize) {
+        logger.debug("getAllAvatars is running");
         PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize);
         return avatarRepository.findAll(pageRequest).getContent();
     }
