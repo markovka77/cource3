@@ -10,6 +10,7 @@ import ru.hogwarts.school.service.AvatarService;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.util.Collection;
 
 @RestController
 @RequestMapping("/avatar")
@@ -54,5 +55,10 @@ public class AvatarController {
 
     }
 
+    @GetMapping("/page")
+    public Collection<Avatar> getAllAvatars(@RequestParam("page") Integer pageNumber,
+                                            @RequestParam("size") Integer pageSize) {
+        return avatarService.getAllAvatars(pageNumber, pageSize);
+    }
 
 }
