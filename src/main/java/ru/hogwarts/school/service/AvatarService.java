@@ -18,7 +18,7 @@ import java.util.Collection;
 
 @Service
 public class AvatarService {
-    Logger logger = LoggerFactory.getLogger(AvatarService.class);
+  private final   Logger logger = LoggerFactory.getLogger(AvatarService.class);
     private final AvatarRepository avatarRepository;
     private final StudentRepository studentRepository;
 

@@ -93,7 +93,7 @@ public class StudentController {
     }
 
     @GetMapping("/avgAgeOfStudents")
-    public String avgAgeOfStudents(){
+    public double avgAgeOfStudents(){
         return studentService.avgAgeStudent();
     }
 

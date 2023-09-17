@@ -1,17 +1,21 @@
 package ru.hogwarts.school.service;
 
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+import ru.hogwarts.school.exception.BadRequestException;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.repositories.FacultyRepository;
 
 import java.util.*;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 @Service
 public class FacultyService {
-    Logger logger = LoggerFactory.getLogger(FacultyService.class);
+   private final Logger logger = LoggerFactory.getLogger(FacultyService.class);
     private final FacultyRepository facultyRepository;
 
 
@@ -27,17 +31,25 @@ public class FacultyService {
 
     public Faculty findFaculty(long id) {
         logger.debug("findFaculty is running");
-        return facultyRepository.findById(id).get();
+        return facultyRepository.findById(id).orElseThrow(BadRequestException::new);
     }
 
     public Faculty editFaculty(Faculty faculty) {
         logger.debug("editFaculty is running");
-        return facultyRepository.save(faculty);
+        Optional<Faculty> test = facultyRepository.findById(faculty.getId());
+        if(test.isPresent()){
+            facultyRepository.save(faculty);
+        }else throw new BadRequestException("no faculty with this ID");
+        return faculty;
     }
 
     public void removeFaculty(long id) {
         logger.debug("removeFaculty is running");
-        facultyRepository.deleteAllById(id);
+        Optional<Faculty> test = facultyRepository.findById(id);
+        if(test.isPresent()){
+            facultyRepository.deleteById(id);
+        }else throw new BadRequestException("no faculty with this ID");
+
     }
 
     public Collection<Faculty> getAllFaculty() {
@@ -62,17 +74,19 @@ public class FacultyService {
 
     public String longestNameOfFaculty() {
         return facultyRepository.findAll().stream()
-                .max(Comparator.comparing(f->f.getName().length()))
-                .map(Faculty::getName).toString();
+                .max(Comparator.comparing(f -> f.getName().length()))
+                .map(Faculty::getName)
+                .orElseThrow(BadRequestException::new);
     }
 
-    public int sum(){
+    public Integer sum(){
 
-        return Stream.iterate(1, a -> a +1)
-                .limit(1_000_000)
-                .parallel()
+        return IntStream.rangeClosed(1,1_000_000)
                 .reduce(0, Integer::sum);
+
     }
+
+
 
 
 }

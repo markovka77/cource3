@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 
 @Service
 public class StudentService {
-    Logger logger = LoggerFactory.getLogger(StudentService.class);
+    private final Logger logger = LoggerFactory.getLogger(StudentService.class);
 
     private final StudentRepository studentRepository;
 
@@ -87,11 +87,11 @@ public class StudentService {
 
     }
 
-    public String avgAgeStudent(){
-        String avgAge = getAllStudent().stream()
+    public double avgAgeStudent(){
+        double avgAge = getAllStudent().stream()
                 .mapToDouble(Student::getAge)
                 .average()
-                .toString();
+                .orElseThrow(RuntimeException::new);
         return avgAge;
 
     }
