@@ -86,4 +86,16 @@ public class StudentController {
         return studentService.getFiveLastStudents();
     }
 
+
+    @GetMapping("/studentNameStartWith{l}")
+    public Collection<Student>studentNameStartWith(@PathVariable String l){
+        return studentService.studentNameStartWith(l);
+    }
+
+    @GetMapping("/avgAgeOfStudents")
+    public double avgAgeOfStudents(){
+        return studentService.avgAgeStudent();
+    }
+
+
 }
