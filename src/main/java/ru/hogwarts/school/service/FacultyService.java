@@ -39,7 +39,9 @@ public class FacultyService {
         Optional<Faculty> test = facultyRepository.findById(faculty.getId());
         if(test.isPresent()){
             facultyRepository.save(faculty);
-        }else throw new BadRequestException("no faculty with this ID");
+        }else {
+            throw new BadRequestException("no faculty with this ID");
+        }
         return faculty;
     }
 
@@ -48,7 +50,10 @@ public class FacultyService {
         Optional<Faculty> test = facultyRepository.findById(id);
         if(test.isPresent()){
             facultyRepository.deleteById(id);
-        }else throw new BadRequestException("no faculty with this ID");
+        }else {
+            throw new BadRequestException("no faculty with this ID");
+
+        }
 
     }
 
