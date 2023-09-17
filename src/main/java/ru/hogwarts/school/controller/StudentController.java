@@ -97,5 +97,15 @@ public class StudentController {
         return studentService.avgAgeStudent();
     }
 
+    @GetMapping("/getFromThreads")
+    public void getStudentFromThreads(){
+        studentService.getStudentsFromTread();
+    }
+
+    @GetMapping("/getFromSyncTreads")
+    public void getStudentFromSyncTreads(){
+        studentService.getStudentsWithSyncTread();
+    }
+
 
 }

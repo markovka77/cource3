@@ -57,15 +57,16 @@ public class StudentService {
         logger.debug("findStudentByAgeBetween is running");
         return studentRepository.findByAgeBetween(min, max);
     }
-    public Collection<Student> getFacultyId(String name){
+
+    public Collection<Student> getFacultyId(String name) {
         logger.debug("getFacultyId is running");
 
         return studentRepository.findStudentByFaculty(name);
     }
 
-    public int getCountOfStudents(){
+    public int getCountOfStudents() {
         logger.debug("getCountOfStudents is running");
-        return  studentRepository.getCountOfStudents();
+        return studentRepository.getCountOfStudents();
     }
 
     public int getAvgAgeOfStudents() {
@@ -73,12 +74,12 @@ public class StudentService {
         return studentRepository.getAvgAgeOfStudents();
     }
 
-    public Collection<Student> getFiveLastStudents(){
+    public Collection<Student> getFiveLastStudents() {
         logger.debug("getFiveLastStudents is running");
         return studentRepository.getFiveLastStudents();
     }
 
-    public List<Student> studentNameStartWith(String l){
+    public List<Student> studentNameStartWith(String l) {
 
         return getAllStudent().stream()
                 .filter(student -> student.getName().toUpperCase().startsWith(String.valueOf(l)))
@@ -87,13 +88,55 @@ public class StudentService {
 
     }
 
-    public double avgAgeStudent(){
+    public double avgAgeStudent() {
         double avgAge = getAllStudent().stream()
                 .mapToDouble(Student::getAge)
                 .average()
                 .orElseThrow(RuntimeException::new);
         return avgAge;
 
+    }
+
+
+    public void getStudentsFromTread() {
+        List<Student> allStudents = studentRepository.findAll();
+        System.out.println(allStudents.get(0));
+        System.out.println(allStudents.get(1));
+        Thread thread1 = new Thread(() -> {
+            System.out.println(allStudents.get(2));
+            System.out.println(allStudents.get(3));
+        });
+        Thread thread2 = new Thread(() -> {
+            System.out.println(allStudents.get(4));
+            System.out.println(allStudents.get(5));
+        });
+
+        thread1.start();
+        thread2.start();
+
+
+    }
+
+
+    private synchronized void printStudent(Student student) {
+        System.out.println(student);
+    }
+
+    public void getStudentsWithSyncTread() {
+        List<Student> allStudents = studentRepository.findAll();
+        printStudent(allStudents.get(0));
+        printStudent(allStudents.get(1));
+        Thread thread1 = new Thread(() -> {
+            printStudent(allStudents.get(2));
+            printStudent(allStudents.get(3));
+        });
+        Thread thread2 = new Thread(() -> {
+            printStudent(allStudents.get(4));
+            printStudent(allStudents.get(5));
+        });
+
+        thread1.start();
+        thread2.start();
     }
 
 
