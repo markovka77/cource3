@@ -79,12 +79,24 @@ public class FacultyService {
                 .orElseThrow(BadRequestException::new);
     }
 
-    public Integer sum(){
+    public void sum(){
+        long time1 = System.currentTimeMillis();
+        int sum = Stream.iterate(1, a -> a +1)
+                .limit(1_000_000)
+                .reduce(0, (a, b) -> a + b );
+        long time = System.currentTimeMillis()-time1;
+        logger.info("completed in "+time);
 
-        return IntStream.rangeClosed(1,1_000_000)
+
+        long time2 = System.currentTimeMillis();
+         int sum1 =IntStream.rangeClosed(1,1_000_000)
                 .reduce(0, Integer::sum);
-
+        long time3 = System.currentTimeMillis()-time2;
+        logger.info("completed in "+time3);
     }
+
+
+
 
 
 
