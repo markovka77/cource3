@@ -9,14 +9,12 @@ import ru.hogwarts.school.repositories.StudentRepository;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class StudentService {
     private final Logger logger = LoggerFactory.getLogger(StudentService.class);
 
-    private final StudentRepository studentRepository;
+    private StudentRepository studentRepository;
 
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
@@ -100,15 +98,17 @@ public class StudentService {
 
     public void getStudentsFromTread() {
         List<Student> allStudents = studentRepository.findAll();
-        System.out.println(allStudents.get(0));
-        System.out.println(allStudents.get(1));
+
+        String info1 = allStudents.get(0) + " ; " + allStudents.get(1);
+        logger.info(info1);
+
         Thread thread1 = new Thread(() -> {
-            System.out.println(allStudents.get(2));
-            System.out.println(allStudents.get(3));
+            String info2 = allStudents.get(2) + " ; " + allStudents.get(3);
+            logger.info(info2);
         });
         Thread thread2 = new Thread(() -> {
-            System.out.println(allStudents.get(4));
-            System.out.println(allStudents.get(5));
+            String info3 = allStudents.get(4) + " ; " + allStudents.get(5);
+            logger.info(info3);
         });
 
         thread1.start();
@@ -116,23 +116,30 @@ public class StudentService {
 
 
     }
+    static private int count = 0;
 
 
-    private synchronized void printStudent(Student student) {
-        System.out.println(student);
+    private synchronized String printStudent() {
+        List<Student> allStudents = studentRepository.findAll();
+        String st= String.valueOf(allStudents.get(count));
+        count++;
+        return st;
     }
 
     public void getStudentsWithSyncTread() {
-        List<Student> allStudents = studentRepository.findAll();
-        printStudent(allStudents.get(0));
-        printStudent(allStudents.get(1));
+    logger.info(printStudent());
+    logger.info(printStudent());
+
         Thread thread1 = new Thread(() -> {
-            printStudent(allStudents.get(2));
-            printStudent(allStudents.get(3));
+            logger.info(printStudent());
+            logger.info(printStudent());
+
+
         });
         Thread thread2 = new Thread(() -> {
-            printStudent(allStudents.get(4));
-            printStudent(allStudents.get(5));
+            logger.info(printStudent());
+            logger.info(printStudent());
+
         });
 
         thread1.start();
