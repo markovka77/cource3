@@ -10,6 +10,7 @@ import ru.hogwarts.school.service.StudentService;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping("student")
@@ -85,5 +86,27 @@ public class StudentController {
     public Collection<Student> getLastFiveStudents(){
         return studentService.getFiveLastStudents();
     }
+
+
+    @GetMapping("/studentNameStartWith{l}")
+    public Collection<Student>studentNameStartWith(@PathVariable String l){
+        return studentService.studentNameStartWith(l);
+    }
+
+    @GetMapping("/avgAgeOfStudents")
+    public double avgAgeOfStudents(){
+        return studentService.avgAgeStudent();
+    }
+
+    @GetMapping("/getFromThreads")
+    public void getStudentFromThreads(){
+        studentService.getStudentsFromTread();
+    }
+
+    @GetMapping("/getFromSyncTreads")
+    public void getStudentFromSyncTreads(){
+        studentService.getStudentsWithSyncTread();
+    }
+
 
 }

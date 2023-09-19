@@ -68,4 +68,14 @@ public class FacultyController {
         return facultyService.getStudentsOfFaculty(name);
     }
 
+    @GetMapping("/longestName")
+    public String longestNameOfFaculty(){
+        return facultyService.longestNameOfFaculty();
+    }
+
+    @GetMapping("/sum")
+    public void sum (){
+        facultyService.sum();
+    }
+
 }
